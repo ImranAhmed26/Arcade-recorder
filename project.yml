@@ -1,0 +1,36 @@
+name: Arcade
+options:
+  bundleIdPrefix: com.binate.arcade
+  deploymentTarget:
+    macOS: "14.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    PRODUCT_NAME: Arcade
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    SWIFT_VERSION: "5.0"
+    # Sign with a personal, self-signed code-signing certificate ("Arcade Local Dev").
+    # It is NOT linked to any Apple Developer team — it lives only in this machine's
+    # login keychain. Because the signature is certificate-based (not the ad-hoc
+    # cdhash), the macOS Screen Recording (TCC) grant persists across rebuilds.
+    DEVELOPMENT_TEAM: ""
+    CODE_SIGN_STYLE: Manual
+    CODE_SIGN_IDENTITY: "EAB573A06876C51DCC001119152155260C5E47FB"
+    # Hardened runtime requires a Developer ID for notarization; turn it off for
+    # this locally-run self-signed dev build.
+    ENABLE_HARDENED_RUNTIME: NO
+targets:
+  Arcade:
+    type: application
+    platform: macOS
+    sources:
+      - path: Arcade
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.binate.arcade
+        INFOPLIST_FILE: Arcade/Info.plist
+        CODE_SIGN_ENTITLEMENTS: Arcade/Arcade.entitlements
+        GENERATE_INFOPLIST_FILE: NO
+        COMBINE_HIDPI_IMAGES: YES
+        ASSETCATALOG_COMPILER_APPICON_NAME: ""

@@ -34,7 +34,7 @@ struct ControlBarView: View {
                 Image(systemName: "stop.fill")
                     .foregroundStyle(.white)
                     .padding(8)
-                    .background(.red, in: RoundedRectangle(cornerRadius: 8))
+                    .background(Theme.record, in: RoundedRectangle(cornerRadius: 8))
             }
             .buttonStyle(.plain)
 

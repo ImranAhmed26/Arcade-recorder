@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Static sign-in. UI only — no authentication. "Continue" advances to the dashboard.
+/// Static sign-in. UI only — no authentication. "Continue" advances to the app.
 struct SignInView: View {
     @EnvironmentObject private var appState: AppState
     @State private var email = ""
@@ -8,47 +8,39 @@ struct SignInView: View {
 
     var body: some View {
         ZStack {
-            LinearGradient(
-                colors: [Color(red: 0.10, green: 0.11, blue: 0.18),
-                         Color(red: 0.05, green: 0.06, blue: 0.10)],
-                startPoint: .topLeading, endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
+            Theme.windowBackground.ignoresSafeArea()
 
-            VStack(spacing: 24) {
-                VStack(spacing: 8) {
+            VStack(spacing: Theme.Space.xl) {
+                VStack(spacing: Theme.Space.sm) {
                     Image(systemName: "record.circle.fill")
-                        .font(.system(size: 52))
-                        .foregroundStyle(.red)
+                        .font(.system(size: 48))
+                        .foregroundStyle(Theme.primary)
                     Text("Arcade")
-                        .font(.system(size: 34, weight: .bold, design: .rounded))
-                        .foregroundStyle(.white)
+                        .font(.system(size: 30, weight: .bold, design: .rounded))
+                        .foregroundStyle(Theme.textPrimary)
                     Text("Record your screen, beautifully.")
                         .font(.subheadline)
-                        .foregroundStyle(.white.opacity(0.6))
+                        .foregroundStyle(Theme.textSecondary)
                 }
 
-                VStack(spacing: 12) {
+                VStack(spacing: Theme.Space.md) {
                     TextField("Email", text: $email)
                         .textFieldStyle(.roundedBorder)
                     SecureField("Password", text: $password)
                         .textFieldStyle(.roundedBorder)
 
                     Button {
-                        appState.signIn()
+                        appState.signIn(email: email)
                     } label: {
                         Text("Continue")
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 6)
                     }
-                    .buttonStyle(.borderedProminent)
-                    .tint(.red)
+                    .buttonStyle(PrimaryButtonStyle())
                     .keyboardShortcut(.defaultAction)
                 }
-                .frame(width: 320)
-                .padding(24)
-                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
+                .frame(width: 300)
+                .cardSurface(padding: Theme.Space.xl)
             }
+            .padding(40)
         }
     }
 }

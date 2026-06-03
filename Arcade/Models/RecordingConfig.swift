@@ -39,14 +39,24 @@ struct RecordingConfig: Equatable {
     var captureSystemAudio: Bool = true
     var captureMicrophone: Bool = true
 
+    /// Whether the webcam is included this session (the Home "Screen + Camera"
+    /// vs "Screen only" toggle). The camera selection itself is remembered.
+    var includeCamera: Bool = true
+
     var quality: VideoQuality = .p1080
     var frameRate: Int = 30
+
+    /// Countdown length in seconds before recording starts (0 = no countdown).
+    var countdownSeconds: Int = 3
 
     /// User-selected persistent save directory (resolved from a security-scoped bookmark).
     var saveDirectory: URL?
 
     /// AAC audio bitrate (128–192 kbps band).
     var audioBitrate: Int = 160_000
+
+    /// Camera to actually use this session — nil when "Screen only" is selected.
+    var effectiveCameraID: String? { includeCamera ? cameraID : nil }
 }
 
 // MARK: - Persistence
@@ -60,8 +70,10 @@ extension RecordingConfig {
         var microphoneID: String?
         var captureSystemAudio: Bool
         var captureMicrophone: Bool
+        var includeCamera: Bool?
         var quality: VideoQuality
         var frameRate: Int
+        var countdownSeconds: Int?
     }
 
     private static let key = "arcade.config"
@@ -70,7 +82,9 @@ extension RecordingConfig {
         let p = Persisted(cameraID: cameraID, microphoneID: microphoneID,
                           captureSystemAudio: captureSystemAudio,
                           captureMicrophone: captureMicrophone,
-                          quality: quality, frameRate: frameRate)
+                          includeCamera: includeCamera,
+                          quality: quality, frameRate: frameRate,
+                          countdownSeconds: countdownSeconds)
         if let data = try? JSONEncoder().encode(p) {
             UserDefaults.standard.set(data, forKey: Self.key)
         }
@@ -83,7 +97,9 @@ extension RecordingConfig {
         microphoneID = p.microphoneID
         captureSystemAudio = p.captureSystemAudio
         captureMicrophone = p.captureMicrophone
+        includeCamera = p.includeCamera ?? true
         quality = p.quality
         frameRate = p.frameRate
+        countdownSeconds = p.countdownSeconds ?? 3
     }
 }

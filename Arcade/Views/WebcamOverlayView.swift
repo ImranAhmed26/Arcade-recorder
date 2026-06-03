@@ -51,6 +51,6 @@ struct WebcamOverlayView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .clipShape(Circle())
-        .overlay(Circle().strokeBorder(.white.opacity(0.85), lineWidth: 3))
+        .overlay(Circle().strokeBorder(.black.opacity(0.55), lineWidth: 1.5))
     }
 }

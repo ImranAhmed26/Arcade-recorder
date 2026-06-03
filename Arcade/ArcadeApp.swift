@@ -8,11 +8,13 @@ struct ArcadeApp: App {
         WindowGroup {
             RootView()
                 .environmentObject(appState)
+                .tint(Theme.primary)
+                .preferredColorScheme(appState.themeMode.colorScheme)
                 .frame(minWidth: 900, minHeight: 600)
         }
         .windowStyle(.titleBar)
         .windowResizability(.contentMinSize)
-        .defaultSize(width: 1000, height: 680)
+        .defaultSize(width: 1040, height: 700)
     }
 }
 
@@ -26,9 +28,8 @@ struct RootView: View {
             case .signIn:
                 SignInView()
             case .dashboard, .countdown, .recording:
-                // The dashboard remains the host view; countdown/recording are
-                // presented via floating overlay windows managed by WindowManager.
-                DashboardView()
+                // Sidebar host; countdown/recording use floating overlay windows.
+                MainWindowView()
             }
         }
         .animation(.easeInOut(duration: 0.25), value: appState.phase)

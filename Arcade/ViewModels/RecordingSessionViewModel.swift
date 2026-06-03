@@ -69,12 +69,16 @@ final class RecordingSessionViewModel: ObservableObject {
 
     // MARK: - Countdown
 
-    /// Runs 3 → 2 → 1, then flips to recording and invokes `onRecording`.
+    /// Runs the configured countdown (n…1), then flips to recording and invokes
+    /// `onRecording`. A countdown of 0 starts immediately after the REC flash.
     func beginCountdown(onRecording: @escaping () -> Void) {
         Task { @MainActor in
-            for n in stride(from: 3, through: 1, by: -1) {
-                stage = .countdown(n)
-                try? await Task.sleep(nanoseconds: 1_000_000_000)
+            let seconds = max(0, config.countdownSeconds)
+            if seconds > 0 {
+                for n in stride(from: seconds, through: 1, by: -1) {
+                    stage = .countdown(n)
+                    try? await Task.sleep(nanoseconds: 1_000_000_000)
+                }
             }
             showRecFlash = true
             try? await Task.sleep(nanoseconds: 600_000_000)

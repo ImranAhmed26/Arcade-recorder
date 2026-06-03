@@ -13,7 +13,7 @@ struct CountdownView: View {
                 if session.showRecFlash {
                     Text("REC")
                         .font(.system(size: 96, weight: .heavy, design: .rounded))
-                        .foregroundStyle(.red)
+                        .foregroundStyle(Theme.record)
                 } else if case .countdown(let n) = session.stage {
                     Text("\(n)")
                         .font(.system(size: 140, weight: .bold, design: .rounded))

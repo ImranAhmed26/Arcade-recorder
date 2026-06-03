@@ -77,18 +77,21 @@ enum MergeService {
             let yExpr = stepExpr(ySteps)
 
             let r = Double(d) / 2.0
-            let thickness = max(2.0, Double(d) * 0.02)
-            let outerSq = r * r
-            let innerSq = (r - thickness) * (r - thickness)
-            let dist = "(X-\(r))*(X-\(r))+(Y-\(r))*(Y-\(r))"
-            let ring = "gte(\(dist),\(innerSq))*lte(\(dist),\(outerSq))"
-            let inside = "lte(\(dist),\(outerSq))"
+            let aa = 1.3                                   // edge softness (px) → anti-aliased rim
+            let ringW = max(1.5, Double(d) * 0.012)        // thin black outline
+            // Actual (not squared) distance from the circle centre.
+            let dd = "sqrt((X-\(r))*(X-\(r))+(Y-\(r))*(Y-\(r)))"
+            // Color: thin black ring near the edge, original pixel inside.
+            let blackRing = "gte(\(dd),\(r - ringW))"
+            // Alpha: smooth ramp from opaque to transparent across `aa` px at the
+            // rim instead of a hard 1/0 cutoff — removes the jagged circle edge.
+            let alpha = "clip((\(r)-\(dd))/\(aa),0,1)*255"
 
             let geq = "geq="
-                + "r='if(\(ring),255,r(X,Y))':"
-                + "g='if(\(ring),255,g(X,Y))':"
-                + "b='if(\(ring),255,b(X,Y))':"
-                + "a='if(\(inside),255,0)'"
+                + "r='if(\(blackRing),0,r(X,Y))':"
+                + "g='if(\(blackRing),0,g(X,Y))':"
+                + "b='if(\(blackRing),0,b(X,Y))':"
+                + "a='\(alpha)'"
 
             filters.append("[1:v]crop='min(iw,ih)':'min(iw,ih)',scale=\(d):\(d),format=rgba,\(geq)[cam]")
             filters.append("[0:v][cam]overlay=x='\(xExpr)':y='\(yExpr)':format=auto[v]")

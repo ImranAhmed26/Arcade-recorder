@@ -43,6 +43,14 @@ final class AppState: ObservableObject {
     /// Checked once on dashboard appear; must be true before a recording can start.
     @Published var hasScreenPermission = false
 
+    /// Email entered on the (static) sign-in screen, shown in the sidebar footer.
+    @Published var accountEmail: String?
+
+    /// App appearance (System / Light / Dark), persisted across launches.
+    @Published var themeMode: ThemeMode = .system {
+        didSet { UserDefaults.standard.set(themeMode.rawValue, forKey: "arcade.themeMode") }
+    }
+
     /// Check (and cache) screen-recording permission by probing SCShareableContent.
     /// This is the only place that call is made outside of the actual recorder.
     func checkScreenPermission() async {
@@ -54,15 +62,29 @@ final class AppState: ObservableObject {
 
     init() {
         config.loadPersisted()
+        if let raw = UserDefaults.standard.string(forKey: "arcade.themeMode"),
+           let mode = ThemeMode(rawValue: raw) {
+            themeMode = mode
+        }
     }
 
-    func signIn() {
+    func signIn(email: String) {
+        let trimmed = email.trimmingCharacters(in: .whitespacesAndNewlines)
+        accountEmail = trimmed.isEmpty ? "you@arcade.app" : trimmed
         phase = .dashboard
+    }
+
+    func signOut() {
+        accountEmail = nil
+        phase = .signIn
     }
 
     /// Begin a new recording session: lock config, show overlays, run countdown.
     func startSession() {
-        let session = RecordingSessionViewModel(config: config)
+        // Apply the "Screen only" toggle: clear the camera for this session.
+        var sessionConfig = config
+        sessionConfig.cameraID = config.effectiveCameraID
+        let session = RecordingSessionViewModel(config: sessionConfig)
         session.onFinish = { [weak self] saved in
             self?.endSession(saved: saved)
         }
@@ -88,7 +110,7 @@ final class AppState: ObservableObject {
 
         session.startCameraPreview()
         WindowManager.shared.showOverlays(for: session,
-                                          showWebcam: config.cameraID != nil,
+                                          showWebcam: config.effectiveCameraID != nil,
                                           screen: targetScreen)
 
         let displayID = config.displayID

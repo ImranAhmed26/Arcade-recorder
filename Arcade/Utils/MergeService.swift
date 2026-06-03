@@ -76,16 +76,21 @@ enum MergeService {
             let xExpr = stepExpr(xSteps)
             let yExpr = stepExpr(ySteps)
 
-            let r = Double(d) / 2.0
-            let aa = 1.3                                   // edge softness (px) → anti-aliased rim
-            let ringW = max(1.5, Double(d) * 0.012)        // thin black outline
-            // Actual (not squared) distance from the circle centre.
-            let dd = "sqrt((X-\(r))*(X-\(r))+(Y-\(r))*(Y-\(r)))"
-            // Color: thin black ring near the edge, original pixel inside.
-            let blackRing = "gte(\(dd),\(r - ringW))"
-            // Alpha: smooth ramp from opaque to transparent across `aa` px at the
-            // rim instead of a hard 1/0 cutoff — removes the jagged circle edge.
-            let alpha = "clip((\(r)-\(dd))/\(aa),0,1)*255"
+            // SUPERSAMPLED CIRCLE: build the alpha mask at the camera's native
+            // (cropped-square) resolution using W/H-relative geometry, then
+            // area-downscale to the overlay size. Masking at full res + a quality
+            // downscale yields a genuinely smooth, perfectly round edge that
+            // survives compression — masking at the small overlay size (the old
+            // approach) produced a low-res, polygonal-looking rim.
+            //
+            // Geometry is expressed as fractions of the plane width `W` so it
+            // works at whatever native resolution the cropped webcam happens to be.
+            let kRing = 1.6 / Double(d)   // black outline ≈ 1.6 px in the final overlay
+            let kAA   = 1.2 / Double(d)   // edge softness ≈ 1.2 px in the final overlay
+            let dd = "sqrt((X-W/2)*(X-W/2)+(Y-H/2)*(Y-H/2))"
+            let ringInner = "(W*\(0.5 - kRing))"
+            let blackRing = "gte(\(dd),\(ringInner))"
+            let alpha = "clip((W/2-\(dd))/(W*\(kAA)),0,1)*255"
 
             let geq = "geq="
                 + "r='if(\(blackRing),0,r(X,Y))':"
@@ -93,7 +98,8 @@ enum MergeService {
                 + "b='if(\(blackRing),0,b(X,Y))':"
                 + "a='\(alpha)'"
 
-            filters.append("[1:v]crop='min(iw,ih)':'min(iw,ih)',scale=\(d):\(d),format=rgba,\(geq)[cam]")
+            // crop to centre square → mask at native res → high-quality downscale.
+            filters.append("[1:v]crop='min(iw,ih)':'min(iw,ih)',format=rgba,\(geq),scale=\(d):\(d):flags=area[cam]")
             filters.append("[0:v][cam]overlay=x='\(xExpr)':y='\(yExpr)':format=auto[v]")
             videoLabel = "[v]"
         }

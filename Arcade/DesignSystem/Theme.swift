@@ -28,12 +28,12 @@ enum Theme {
 
     // MARK: - Brand (the only custom colors — swap these to re-theme)
 
-    /// Emerald. Light = oklch(50.8% 0.118 165.612), dark = oklch(69.6% 0.17 162.48).
-    static let primary = dynamic(light: 0x007A55, dark: 0x00BC7D)
+    /// Emerald — oklch(59.6% 0.145 163.225), same in light and dark.
+    static let primary = Color(nsColor: NSColor(hex: 0x009966))
     /// Pine / teal supporting accent.
     static let secondary = dynamic(light: 0x0B7E74, dark: 0x29C2B3)
-    /// Record actions are always red — oklch(63.7% 0.237 25.331).
-    static let record = Color(nsColor: NSColor(hex: 0xFB2C36))
+    /// Start/record action — same emerald as the primary.
+    static let record = Color(nsColor: NSColor(hex: 0x009966))
 
     /// A soft tint of the primary, for chips / selected backgrounds.
     static var primaryTint: Color { primary.opacity(0.12) }

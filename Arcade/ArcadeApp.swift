@@ -9,8 +9,8 @@ struct ArcadeApp: App {
             RootView()
                 .environmentObject(appState)
                 .tint(Theme.primary)
-                .preferredColorScheme(appState.themeMode.colorScheme)
                 .frame(minWidth: 900, minHeight: 600)
+                .onAppear { appState.applyAppearance() }
         }
         .windowStyle(.titleBar)
         .windowResizability(.contentMinSize)

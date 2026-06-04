@@ -62,17 +62,20 @@ struct HomeView: View {
                         }
                     }
 
-                    if appState.config.includeCamera {
-                        SettingRow("Camera", systemImage: "video") {
-                            Picker("", selection: $appState.config.cameraID) {
-                                Text("Off").tag(String?.none)
-                                ForEach(devices.cameras) { c in
-                                    Text(c.name).tag(String?.some(c.id))
-                                }
+                    // Always present (keeps the card height constant so the
+                    // Recent section below doesn't jump when toggling modes);
+                    // disabled in "Screen only" mode.
+                    SettingRow("Camera", systemImage: "video") {
+                        Picker("", selection: $appState.config.cameraID) {
+                            Text("Off").tag(String?.none)
+                            ForEach(devices.cameras) { c in
+                                Text(c.name).tag(String?.some(c.id))
                             }
-                            .labelsHidden().fixedSize()
                         }
+                        .labelsHidden().fixedSize()
                     }
+                    .disabled(!appState.config.includeCamera)
+                    .opacity(appState.config.includeCamera ? 1 : 0.45)
 
                     SettingRow("Microphone", systemImage: "mic") {
                         Picker("", selection: $appState.config.microphoneID) {

@@ -42,7 +42,22 @@ final class ScreenRecorder: NSObject {
         let excluded = content.windows.filter { excludingWindowNumbers.contains(Int($0.windowID)) }
         let filter = SCContentFilter(display: display, excludingWindows: excluded)
 
-        let (w, h) = config.quality.dimensions
+        // Size the capture buffer to the DISPLAY'S native aspect ratio rather than
+        // a fixed 16:9. This prevents letterbox/pillarbox black bars on non-16:9
+        // displays (e.g. the 16:10 built-in MacBook screen) and — crucially —
+        // keeps the webcam overlay placement (stored as fractions of the display)
+        // pixel-accurate in the merged output, since the video then maps 1:1 to
+        // the display with no inset/offset. Works for any screen size/aspect.
+        let tierHeight = config.quality.dimensions.height
+        let aspect = display.height > 0
+            ? Double(display.width) / Double(display.height)
+            : 16.0 / 9.0
+        var w = Int((Double(tierHeight) * aspect).rounded())
+        var h = tierHeight
+        // H.264/HEVC encoders require even dimensions.
+        if w % 2 != 0 { w += 1 }
+        if h % 2 != 0 { h += 1 }
+
         let streamConfig = SCStreamConfiguration()
         streamConfig.width = w
         streamConfig.height = h

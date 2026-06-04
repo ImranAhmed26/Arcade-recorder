@@ -48,7 +48,21 @@ final class AppState: ObservableObject {
 
     /// App appearance (System / Light / Dark), persisted across launches.
     @Published var themeMode: ThemeMode = .system {
-        didSet { UserDefaults.standard.set(themeMode.rawValue, forKey: "arcade.themeMode") }
+        didSet {
+            UserDefaults.standard.set(themeMode.rawValue, forKey: "arcade.themeMode")
+            applyAppearance()
+        }
+    }
+
+    /// Drive the AppKit appearance directly so every view (and its semantic
+    /// text/surface colors) updates immediately, not just after a re-render.
+    func applyAppearance() {
+        guard NSApp != nil else { return }   // safe no-op if called before launch
+        switch themeMode {
+        case .system: NSApp.appearance = nil
+        case .light:  NSApp.appearance = NSAppearance(named: .aqua)
+        case .dark:   NSApp.appearance = NSAppearance(named: .darkAqua)
+        }
     }
 
     /// Check (and cache) screen-recording permission by probing SCShareableContent.
@@ -66,6 +80,7 @@ final class AppState: ObservableObject {
            let mode = ThemeMode(rawValue: raw) {
             themeMode = mode
         }
+        applyAppearance()
     }
 
     func signIn(email: String) {

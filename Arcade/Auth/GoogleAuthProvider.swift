@@ -106,13 +106,17 @@ final class GoogleAuthProvider: NSObject, ASWebAuthenticationPresentationContext
     // MARK: - Token exchange / refresh
 
     private func exchangeCode(_ code: String, verifier: String) async throws -> UserSession {
-        let token = try await postToken([
+        var fields = [
             "client_id": GoogleAuthConfig.clientID,
             "code": code,
             "code_verifier": verifier,
             "grant_type": "authorization_code",
             "redirect_uri": GoogleAuthConfig.redirectURI,
-        ])
+        ]
+        if !GoogleAuthConfig.clientSecret.isEmpty {
+            fields["client_secret"] = GoogleAuthConfig.clientSecret   // Desktop-app clients only
+        }
+        let token = try await postToken(fields)
         guard let idToken = token.id_token else { throw AuthError.noProfile }
         let claims = Self.decodeIDToken(idToken)
         return UserSession(
@@ -130,11 +134,15 @@ final class GoogleAuthProvider: NSObject, ASWebAuthenticationPresentationContext
     /// fields are carried over from the existing session.
     func refresh(_ session: UserSession) async throws -> UserSession {
         guard let refreshToken = session.refreshToken else { throw AuthError.tokenExchangeFailed("no refresh token") }
-        let token = try await postToken([
+        var fields = [
             "client_id": GoogleAuthConfig.clientID,
             "refresh_token": refreshToken,
             "grant_type": "refresh_token",
-        ])
+        ]
+        if !GoogleAuthConfig.clientSecret.isEmpty {
+            fields["client_secret"] = GoogleAuthConfig.clientSecret
+        }
+        let token = try await postToken(fields)
         var updated = session
         updated.accessToken = token.access_token
         updated.idToken = token.id_token ?? session.idToken

@@ -14,7 +14,12 @@ import Foundation
 /// automatically — nothing else to configure. No client secret is stored anywhere.
 enum GoogleAuthConfig {
     /// Paste your Google OAuth **iOS** client ID here.
-    static let clientID = "YOUR_CLIENT_ID.apps.googleusercontent.com"
+    static let clientID = "735844548480-rbme0anmgk9pnvmuh4f2c75ou2rqr3cu.apps.googleusercontent.com"
+
+    /// Leave EMPTY for an **iOS** client (public, PKCE, no secret — recommended).
+    /// Only fill this in if you created a **Desktop app** client, which Google
+    /// treats as confidential and requires a client secret at the token endpoint.
+    static let clientSecret = ""
 
     /// Reversed-client-ID scheme used as the OAuth redirect + ASWebAuthenticationSession callback.
     static var redirectScheme: String {

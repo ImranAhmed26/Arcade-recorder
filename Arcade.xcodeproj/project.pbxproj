@@ -13,10 +13,14 @@
 		0C7379DD2C6120891CBC6B47 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9FC4F7B3EEB237B393C814 /* SidebarView.swift */; };
 		14E54D563B7F078F2AA228F8 /* CameraRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F8FA5689F7AA0D46585EEA /* CameraRecorder.swift */; };
 		192B4391CDD029AFFD1BF323 /* CountdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB477CCB3D5C73E3B69B60DE /* CountdownView.swift */; };
+		1B6C3CEA19450D2D98CF312D /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E526A9B52F156A95CC474084 /* KeychainStore.swift */; };
+		1E544A30FCF0DF00D566231E /* GoogleAuthConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11AD0D55002CBB6D7F9C003 /* GoogleAuthConfig.swift */; };
 		3B43AD7D5680310ED546608C /* MergeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51212B8EE7F32D8C292D1FD6 /* MergeService.swift */; };
 		3EEF5B3DC706375B658F9CBE /* ArcadeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F98671C7C1410739E0BE6BD /* ArcadeApp.swift */; };
+		401BE76FC33FDA4991BECAF5 /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F48EBF5851EC3E912904A6F /* UserSession.swift */; };
 		574BA27B17422D78F3A991DA /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDFEF4E99808592E7EB9321 /* Theme.swift */; };
 		5EE9D466A1E633B45577A5C5 /* ControlBarWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6194889BDD1219F6F6F35585 /* ControlBarWindow.swift */; };
+		5F03FE9E378638026E9453E3 /* PKCE.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53DC7BF93BF4E96196F31EA2 /* PKCE.swift */; };
 		608143784B926ABFD1A2A44A /* MainWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2487DAB118777F40885A72DB /* MainWindowView.swift */; };
 		667DF683164864664F4A2931 /* DeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE422419A261093CDA12634 /* DeviceManager.swift */; };
 		69A2CDE1CE46B28F034087A6 /* CaptureDevices.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6DF3B08A979F7B451944F17 /* CaptureDevices.swift */; };
@@ -28,7 +32,9 @@
 		81D56070AB54E5160251D304 /* RecordingConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF1686A48AC2F8A8EC0F35F /* RecordingConfig.swift */; };
 		9DFC79071244BEB421C5FACE /* WebcamOverlayWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FFA5ECAB5D5247A5848D49 /* WebcamOverlayWindow.swift */; };
 		B0E6293BC8FF7389511378A7 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 909F7AB0DC87F06B21FE6562 /* AppState.swift */; };
+		BA887C7CB52CED724380CE71 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C1ECC690C1E3EA185D8FD /* AuthService.swift */; };
 		BF9B0EFAA841E6D6B1A1D2FA /* RecordingWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47D3B4AA34427E488D3F7C5 /* RecordingWriter.swift */; };
+		C86D0275E53B1519D0040A40 /* GoogleAuthProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E9FD70C70F965220173BB8 /* GoogleAuthProvider.swift */; };
 		D2D163E92458E63B49DE6876 /* RecordingSessionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E2B3C68CFF8030B6DE11CF /* RecordingSessionViewModel.swift */; };
 		DA65A012EF6AB8C44C4440B4 /* Thumbnailer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993423DBEE894528D60436F4 /* Thumbnailer.swift */; };
 		DCBC82B7F2F4D8C772433A99 /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5BFA753B6927E5C0968A3E /* Formatters.swift */; };
@@ -50,16 +56,19 @@
 		4A6A0888D89905E97AD52623 /* Recording.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recording.swift; sourceTree = "<group>"; };
 		4AF1686A48AC2F8A8EC0F35F /* RecordingConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingConfig.swift; sourceTree = "<group>"; };
 		51212B8EE7F32D8C292D1FD6 /* MergeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeService.swift; sourceTree = "<group>"; };
+		53DC7BF93BF4E96196F31EA2 /* PKCE.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKCE.swift; sourceTree = "<group>"; };
 		54FFA5ECAB5D5247A5848D49 /* WebcamOverlayWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebcamOverlayWindow.swift; sourceTree = "<group>"; };
 		5592091EE0AF5BD23772A8BE /* ControlBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlBarView.swift; sourceTree = "<group>"; };
 		6194889BDD1219F6F6F35585 /* ControlBarWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlBarWindow.swift; sourceTree = "<group>"; };
 		66766D31E0A4D597D43F96BD /* UIComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIComponents.swift; sourceTree = "<group>"; };
 		6F98671C7C1410739E0BE6BD /* ArcadeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArcadeApp.swift; sourceTree = "<group>"; };
 		7294AB77456E8298778BFF72 /* RecordingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingsView.swift; sourceTree = "<group>"; };
+		8F48EBF5851EC3E912904A6F /* UserSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSession.swift; sourceTree = "<group>"; };
 		909F7AB0DC87F06B21FE6562 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		993423DBEE894528D60436F4 /* Thumbnailer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thumbnailer.swift; sourceTree = "<group>"; };
 		996B0381B5A877F733919D06 /* WebcamOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebcamOverlayView.swift; sourceTree = "<group>"; };
 		99A0B23D7ADD034961455742 /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
+		A11AD0D55002CBB6D7F9C003 /* GoogleAuthConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAuthConfig.swift; sourceTree = "<group>"; };
 		A6DF3B08A979F7B451944F17 /* CaptureDevices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureDevices.swift; sourceTree = "<group>"; };
 		A75F616635ACB70D431A2E2E /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		A923426938915389794CCE05 /* Arcade.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Arcade.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,7 +77,10 @@
 		CA5BFA753B6927E5C0968A3E /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
 		CB477CCB3D5C73E3B69B60DE /* CountdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownView.swift; sourceTree = "<group>"; };
 		DC7D6F81EAA053E54160FE37 /* Arcade.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Arcade.entitlements; sourceTree = "<group>"; };
+		E43C1ECC690C1E3EA185D8FD /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		E47D3B4AA34427E488D3F7C5 /* RecordingWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingWriter.swift; sourceTree = "<group>"; };
+		E526A9B52F156A95CC474084 /* KeychainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStore.swift; sourceTree = "<group>"; };
+		E9E9FD70C70F965220173BB8 /* GoogleAuthProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAuthProvider.swift; sourceTree = "<group>"; };
 		EEC60C7B35F2F4180222B168 /* WindowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowManager.swift; sourceTree = "<group>"; };
 		F7F8FA5689F7AA0D46585EEA /* CameraRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraRecorder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -94,6 +106,18 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		3F43286B69C7DA92C08C5208 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				E43C1ECC690C1E3EA185D8FD /* AuthService.swift */,
+				A11AD0D55002CBB6D7F9C003 /* GoogleAuthConfig.swift */,
+				E9E9FD70C70F965220173BB8 /* GoogleAuthProvider.swift */,
+				E526A9B52F156A95CC474084 /* KeychainStore.swift */,
+				53DC7BF93BF4E96196F31EA2 /* PKCE.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
 		829D1100865F3BA37BED8A29 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -101,6 +125,7 @@
 				A6DF3B08A979F7B451944F17 /* CaptureDevices.swift */,
 				4A6A0888D89905E97AD52623 /* Recording.swift */,
 				4AF1686A48AC2F8A8EC0F35F /* RecordingConfig.swift */,
+				8F48EBF5851EC3E912904A6F /* UserSession.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -111,6 +136,7 @@
 				DC7D6F81EAA053E54160FE37 /* Arcade.entitlements */,
 				6F98671C7C1410739E0BE6BD /* ArcadeApp.swift */,
 				C7F30879A58C91BCBC90622B /* Info.plist */,
+				3F43286B69C7DA92C08C5208 /* Auth */,
 				11854B73A671EB15F6EB6A59 /* DesignSystem */,
 				829D1100865F3BA37BED8A29 /* Models */,
 				EE78090ED15926057FAAFA61 /* RecordingEngine */,
@@ -245,6 +271,7 @@
 			files = (
 				B0E6293BC8FF7389511378A7 /* AppState.swift in Sources */,
 				3EEF5B3DC706375B658F9CBE /* ArcadeApp.swift in Sources */,
+				BA887C7CB52CED724380CE71 /* AuthService.swift in Sources */,
 				14E54D563B7F078F2AA228F8 /* CameraRecorder.swift in Sources */,
 				69A2CDE1CE46B28F034087A6 /* CaptureDevices.swift in Sources */,
 				E81572AB73060DC678DEE035 /* ControlBarView.swift in Sources */,
@@ -253,9 +280,13 @@
 				80C2EF41BDA8EA4C1167250B /* DashboardViewModel.swift in Sources */,
 				667DF683164864664F4A2931 /* DeviceManager.swift in Sources */,
 				DCBC82B7F2F4D8C772433A99 /* Formatters.swift in Sources */,
+				1E544A30FCF0DF00D566231E /* GoogleAuthConfig.swift in Sources */,
+				C86D0275E53B1519D0040A40 /* GoogleAuthProvider.swift in Sources */,
 				E01A7D3AD96B7509644DA907 /* HomeView.swift in Sources */,
+				1B6C3CEA19450D2D98CF312D /* KeychainStore.swift in Sources */,
 				608143784B926ABFD1A2A44A /* MainWindowView.swift in Sources */,
 				3B43AD7D5680310ED546608C /* MergeService.swift in Sources */,
+				5F03FE9E378638026E9453E3 /* PKCE.swift in Sources */,
 				7853B7F127F6069F5C2F2FD7 /* Recording.swift in Sources */,
 				81D56070AB54E5160251D304 /* RecordingConfig.swift in Sources */,
 				D2D163E92458E63B49DE6876 /* RecordingSessionViewModel.swift in Sources */,
@@ -269,6 +300,7 @@
 				574BA27B17422D78F3A991DA /* Theme.swift in Sources */,
 				DA65A012EF6AB8C44C4440B4 /* Thumbnailer.swift in Sources */,
 				766B69668FA6531FAB130422 /* UIComponents.swift in Sources */,
+				401BE76FC33FDA4991BECAF5 /* UserSession.swift in Sources */,
 				0452396502E6CA18B19C3FBD /* WebcamOverlayView.swift in Sources */,
 				9DFC79071244BEB421C5FACE /* WebcamOverlayWindow.swift in Sources */,
 				7F93D2AD0E6D636141C13D8C /* WindowManager.swift in Sources */,

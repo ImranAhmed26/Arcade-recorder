@@ -48,15 +48,31 @@ final class ScreenRecorder: NSObject {
         // keeps the webcam overlay placement (stored as fractions of the display)
         // pixel-accurate in the merged output, since the video then maps 1:1 to
         // the display with no inset/offset. Works for any screen size/aspect.
-        let tierHeight = config.quality.dimensions.height
-        let aspect = display.height > 0
-            ? Double(display.width) / Double(display.height)
-            : 16.0 / 9.0
-        var w = Int((Double(tierHeight) * aspect).rounded())
-        var h = tierHeight
+        // Capture at the display's NATIVE pixel resolution (Retina-aware), capped
+        // at 2× the chosen quality tier. Capturing at the real backing-store
+        // resolution keeps text/UI pixel-crisp; the merge step then Lanczos-
+        // downscales to the tier (supersampling) for a sharp final video.
+        // Previously we captured straight at the tier height (1080), which
+        // pre-downsampled Retina content and softened everything.
+        let mode = CGDisplayCopyDisplayMode(display.displayID)
+        let nativeW = mode?.pixelWidth ?? display.width
+        let nativeH = mode?.pixelHeight ?? display.height
+        let aspect = nativeH > 0 ? Double(nativeW) / Double(nativeH) : 16.0 / 9.0
+
+        // Capture at native resolution, capped at 2160 tall to bound 5K/6K panels.
+        // The merge step downscales to the chosen export tier (supersampling) or
+        // keeps this native resolution for the "Native" quality setting.
+        var h = min(nativeH, 2160)
+        var w = Int((Double(h) * aspect).rounded())
         // H.264/HEVC encoders require even dimensions.
         if w % 2 != 0 { w += 1 }
         if h % 2 != 0 { h += 1 }
+
+        // Near-lossless intermediate so the merge re-encode is the ONLY lossy
+        // pass on the screen (~0.18 bits/pixel/frame, clamped). Deleted after merge.
+        let screenBitrate = min(60_000_000,
+                                max(12_000_000,
+                                    Int(Double(w * h) * Double(config.frameRate) * 0.18)))
 
         let streamConfig = SCStreamConfiguration()
         streamConfig.width = w
@@ -75,7 +91,7 @@ final class ScreenRecorder: NSObject {
             url: outputURL,
             width: w, height: h,
             frameRate: config.frameRate,
-            videoBitrate: config.quality.videoBitrate,
+            videoBitrate: screenBitrate,
             hasAudio: config.captureSystemAudio,
             audioBitrate: config.audioBitrate)
         self.writer = writer

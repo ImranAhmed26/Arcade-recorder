@@ -8,6 +8,7 @@ struct ArcadeApp: App {
         WindowGroup {
             RootView()
                 .environmentObject(appState)
+                .environmentObject(appState.auth)
                 .tint(Theme.primary)
                 .frame(minWidth: 900, minHeight: 600)
                 .onAppear { appState.applyAppearance() }

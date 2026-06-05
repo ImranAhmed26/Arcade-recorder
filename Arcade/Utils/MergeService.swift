@@ -49,28 +49,53 @@ enum MergeService {
     /// `keyframes` carry the webcam circle's position at recorded timestamps so
     /// the overlay moves in the output exactly as the user dragged it.
     /// `diameter` is the circle size as a fraction of the display width.
+    /// `targetHeight` = nil keeps the captured native resolution (sharpest);
+    /// otherwise the screen is Lanczos-downscaled to that height. `quality` is the
+    /// VideoToolbox constant-quality value (≈1–100, higher = sharper/larger) — this
+    /// is used instead of an average bitrate because hardware HEVC bitrate control
+    /// badly undershoots on low-complexity screen content, leaving text soft.
     static func merge(screen: URL,
                       webcam: URL?,
                       keyframes: [WebcamPositionKeyframe],
                       diameter: Double,
+                      targetHeight: Int?,
+                      quality: Int,
                       output: URL) throws -> URL {
         guard let ffmpeg = tool("ffmpeg") else { throw MergeError.ffmpegNotFound }
 
-        let (screenW, screenH, screenHasAudio) = try probe(screen)
+        let (capW, capH, screenHasAudio) = try probe(screen)
         let webcamInfo = webcam.flatMap { try? probe($0) }
         let webcamHasVideo = (webcam != nil) && (webcamInfo?.width ?? 0) > 0
         let webcamHasAudio = webcamInfo?.hasAudio ?? false
+
+        // Downscale to the chosen tier height with Lanczos for crisp text; never
+        // upscale. nil targetHeight (Native) keeps the captured resolution.
+        var screenW = capW, screenH = capH
+        if let targetHeight, capH > targetHeight {
+            screenH = targetHeight
+            screenW = Int((Double(capW) * Double(targetHeight) / Double(capH)).rounded())
+            if screenW % 2 != 0 { screenW += 1 }
+        }
 
         var args = ["-y", "-v", "error", "-i", screen.path]
         if webcam != nil { args += ["-i", webcam!.path] }
 
         var filters: [String] = []
-        var videoLabel = "0:v"
+        var screenLabel = "0:v"
+        if screenW != capW || screenH != capH {
+            // Lanczos downscale, then a light luma-only unsharp to recover the
+            // text/UI edge crispness lost when shrinking Retina content to the
+            // chosen tier (downscaling is the main softness source — chroma is
+            // left untouched to avoid colour halos).
+            filters.append("[0:v]scale=\(screenW):\(screenH):flags=lanczos,unsharp=3:3:0.7:3:3:0.0[scr]")
+            screenLabel = "[scr]"
+        }
+        var videoLabel = screenLabel
 
         if webcamHasVideo, !keyframes.isEmpty {
             let d = max(2, Int((diameter * Double(screenW)).rounded()))
 
-            // Build time-varying x/y expressions from position keyframes.
+            // Build time-varying x/y expressions from position keyframes (in final px).
             let xSteps = keyframes.map { (time: $0.time, px: clamp(Int($0.x * Double(screenW)), 0, screenW - d)) }
             let ySteps = keyframes.map { (time: $0.time, px: clamp(Int($0.y * Double(screenH)), 0, screenH - d)) }
             let xExpr = stepExpr(xSteps)
@@ -100,7 +125,11 @@ enum MergeService {
 
             // crop to centre square → mask at native res → high-quality downscale.
             filters.append("[1:v]crop='min(iw,ih)':'min(iw,ih)',format=rgba,\(geq),scale=\(d):\(d):flags=area[cam]")
-            filters.append("[0:v][cam]overlay=x='\(xExpr)':y='\(yExpr)':format=auto[v]")
+            // A filter input must be a bracketed pad label. `screenLabel` is
+            // "[scr]" after a downscale but a raw "0:v" stream specifier when no
+            // scaling happened (e.g. the Native tier) — bracket it for overlay.
+            let screenIn = screenLabel.hasPrefix("[") ? screenLabel : "[\(screenLabel)]"
+            filters.append("\(screenIn)[cam]overlay=x='\(xExpr)':y='\(yExpr)':format=auto[v]")
             videoLabel = "[v]"
         }
 
@@ -123,11 +152,11 @@ enum MergeService {
         }
         args += ["-map", videoLabel]
         args += audioMap
-        // Final output: HEVC via hardware VideoToolbox at 5 Mbps (~37 MB/min ceiling).
-        // HEVC at 5 Mbps delivers significantly better visual quality than H.264
-        // at 10 Mbps for screen content (text, UI, code) and compresses motion
-        // (YT video, animations) much more efficiently.
-        args += ["-c:v", "hevc_videotoolbox", "-b:v", "5M",
+        // Final output: hardware HEVC in CONSTANT-QUALITY mode. Bitrate mode
+        // undershoots on static screen content (≈3 Mbps regardless of target),
+        // which softens text; quality mode allocates bits where detail exists.
+        args += ["-c:v", "hevc_videotoolbox",
+                 "-q:v", "\(quality)",
                  "-tag:v", "hvc1",          // Apple-compatible HEVC tag for QuickTime/IINA
                  "-c:a", "aac", "-b:a", "128k",
                  "-movflags", "+faststart",

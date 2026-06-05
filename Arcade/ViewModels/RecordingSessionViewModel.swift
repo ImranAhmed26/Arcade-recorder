@@ -106,7 +106,7 @@ final class RecordingSessionViewModel: ObservableObject {
                     let webcamURL = folder.appendingPathComponent(Recording.webcamFile)
                     camera.startRecording(url: webcamURL,
                                           frameRate: config.frameRate,
-                                          videoBitrate: config.quality.videoBitrate,
+                                          videoBitrate: config.quality.cameraBitrate,
                                           audioBitrate: config.audioBitrate)
                 }
 
@@ -224,27 +224,31 @@ final class RecordingSessionViewModel: ObservableObject {
 
         guard let folder else { onFinish?(true); return }
         let screenURL = folder.appendingPathComponent(Recording.screenFile)
-        let webcamURL = folder.appendingPathComponent(Recording.webcamFile)
+        let rawWebcamURL = folder.appendingPathComponent(Recording.webcamFile)
         let outputURL = folder.appendingPathComponent(Recording.mergedFile)
 
-        // Only merge when there's a webcam/mic stream to fold in.
-        guard webcamFileSaved else { onFinish?(true); return }
-
+        // Always run the final encode pass — even screen-only — so the output is
+        // a consistent, compact, crisp HEVC at the chosen tier (the screen is
+        // captured above the tier and must be downscaled either way).
+        let webcamURL: URL? = webcamFileSaved ? rawWebcamURL : nil
         let diameter = placement?.diameter ?? 0.09375   // 180pt / 1920px default
         let kf = hasWebcamVideo ? keyframes : []
+        let targetHeight = config.quality.exportHeight   // nil = native
         do {
             try await Task.detached(priority: .userInitiated) {
                 _ = try MergeService.merge(screen: screenURL,
                                            webcam: webcamURL,
                                            keyframes: kf,
                                            diameter: diameter,
+                                           targetHeight: targetHeight,
+                                           quality: 70,   // higher constant-quality → crisper text
                                            output: outputURL)
             }.value
             recording.mergedFileName = Recording.mergedFile
             StorageManager.shared.writeMeta(recording)
             // Single clean output: remove the raw streams.
             try? FileManager.default.removeItem(at: screenURL)
-            try? FileManager.default.removeItem(at: webcamURL)
+            try? FileManager.default.removeItem(at: rawWebcamURL)
             onFinish?(true)
         } catch {
             // Keep the raw files so the recording is still usable.

@@ -23,6 +23,7 @@ enum SidebarSection: String, Hashable, CaseIterable, Identifiable {
 
 struct SidebarView: View {
     @EnvironmentObject private var appState: AppState
+    @EnvironmentObject private var auth: AuthService
     @Binding var selection: SidebarSection
 
     var body: some View {
@@ -56,23 +57,19 @@ struct SidebarView: View {
 
     private var accountFooter: some View {
         HStack(spacing: Theme.Space.sm) {
-            Circle()
-                .fill(Theme.primaryTint)
-                .overlay(
-                    Text(initials)
-                        .font(.caption.weight(.bold))
-                        .foregroundStyle(Theme.primary)
-                )
+            avatar
                 .frame(width: 28, height: 28)
+                .clipShape(Circle())
 
             VStack(alignment: .leading, spacing: 1) {
-                Text(appState.accountEmail ?? "Signed in")
+                Text(auth.currentUser?.displayName ?? "Signed in")
                     .font(.caption.weight(.medium))
                     .foregroundStyle(Theme.textPrimary)
                     .lineLimit(1).truncationMode(.middle)
-                Text("Local account")
+                Text(secondaryLine)
                     .font(.caption2)
                     .foregroundStyle(Theme.textSecondary)
+                    .lineLimit(1).truncationMode(.middle)
             }
             Spacer(minLength: 0)
             IconButton("rectangle.portrait.and.arrow.right", help: "Sign out") {
@@ -82,8 +79,37 @@ struct SidebarView: View {
         .padding(Theme.Space.md)
     }
 
+    @ViewBuilder
+    private var avatar: some View {
+        if let url = auth.currentUser?.avatarURL {
+            AsyncImage(url: url) { image in
+                image.resizable().aspectRatio(contentMode: .fill)
+            } placeholder: {
+                initialsAvatar
+            }
+        } else {
+            initialsAvatar
+        }
+    }
+
+    private var initialsAvatar: some View {
+        Circle()
+            .fill(Theme.primaryTint)
+            .overlay(
+                Text(initials)
+                    .font(.caption.weight(.bold))
+                    .foregroundStyle(Theme.primary)
+            )
+    }
+
+    /// Email if present, else a generic label distinguishing Google vs guest.
+    private var secondaryLine: String {
+        if let email = auth.currentUser?.email { return email }
+        return (auth.currentUser?.isGuest ?? true) ? "Local account" : "Google account"
+    }
+
     private var initials: String {
-        let email = appState.accountEmail ?? "A"
-        return String(email.prefix(1)).uppercased()
+        let base = auth.currentUser?.displayName ?? "A"
+        return String(base.prefix(1)).uppercased()
     }
 }

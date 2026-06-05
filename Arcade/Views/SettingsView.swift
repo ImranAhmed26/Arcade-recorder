@@ -65,7 +65,7 @@ struct SettingsView: View {
                 Card("Video") {
                     SettingRow("Resolution", systemImage: "rectangle.on.rectangle") {
                         Picker("", selection: config.quality) {
-                            ForEach(VideoQuality.allCases) { q in Text(q.rawValue).tag(q) }
+                            ForEach(VideoQuality.allCases) { q in Text(q.title).tag(q) }
                         }.labelsHidden().fixedSize()
                     }
                     SettingRow("Frame rate", systemImage: "speedometer") {

@@ -1,10 +1,10 @@
 import SwiftUI
 
-/// Static sign-in. UI only — no authentication. "Continue" advances to the app.
+/// Login screen. Primary path is Google sign-in via a native, Safari-backed
+/// secure session (ASWebAuthenticationSession). A local "Continue without an
+/// account" fallback keeps the app usable before Google is configured.
 struct SignInView: View {
-    @EnvironmentObject private var appState: AppState
-    @State private var email = ""
-    @State private var password = ""
+    @EnvironmentObject private var auth: AuthService
 
     var body: some View {
         ZStack {
@@ -24,20 +24,48 @@ struct SignInView: View {
                 }
 
                 VStack(spacing: Theme.Space.md) {
-                    TextField("Email", text: $email)
-                        .textFieldStyle(.roundedBorder)
-                    SecureField("Password", text: $password)
-                        .textFieldStyle(.roundedBorder)
-
                     Button {
-                        appState.signIn(email: email)
+                        Task { await auth.signInWithGoogle() }
                     } label: {
-                        Text("Continue")
+                        HStack(spacing: Theme.Space.sm) {
+                            if auth.isAuthenticating {
+                                ProgressView().controlSize(.small)
+                            } else {
+                                Image(systemName: "globe")
+                            }
+                            Text(auth.isAuthenticating ? "Signing in…" : "Continue with Google")
+                                .fontWeight(.medium)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 10)
                     }
-                    .buttonStyle(PrimaryButtonStyle())
-                    .keyboardShortcut(.defaultAction)
+                    .buttonStyle(.bordered)
+                    .controlSize(.large)
+                    .disabled(auth.isAuthenticating)
+
+                    if let error = auth.errorMessage {
+                        Text(error)
+                            .font(.caption)
+                            .foregroundStyle(.red)
+                            .multilineTextAlignment(.center)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+
+                    if !auth.isConfigured {
+                        Text("Google sign-in isn’t configured yet — add your OAuth client ID in GoogleAuthConfig.swift.")
+                            .font(.caption2)
+                            .foregroundStyle(Theme.textSecondary)
+                            .multilineTextAlignment(.center)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+
+                    Button("Continue without an account") {
+                        auth.continueAsGuest()
+                    }
+                    .buttonStyle(.link)
+                    .font(.caption)
                 }
-                .frame(width: 300)
+                .frame(width: 320)
                 .cardSurface(padding: Theme.Space.xl)
             }
             .padding(40)

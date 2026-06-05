@@ -43,8 +43,9 @@ final class AppState: ObservableObject {
     /// Checked once on dashboard appear; must be true before a recording can start.
     @Published var hasScreenPermission = false
 
-    /// Email entered on the (static) sign-in screen, shown in the sidebar footer.
-    @Published var accountEmail: String?
+    /// Authentication (Google OAuth + Keychain). Drives the signIn ↔ dashboard phase.
+    let auth = AuthService()
+    private var authCancellable: AnyCancellable?
 
     /// App appearance (System / Light / Dark), persisted across launches.
     @Published var themeMode: ThemeMode = .system {
@@ -81,17 +82,22 @@ final class AppState: ObservableObject {
             themeMode = mode
         }
         applyAppearance()
-    }
 
-    func signIn(email: String) {
-        let trimmed = email.trimmingCharacters(in: .whitespacesAndNewlines)
-        accountEmail = trimmed.isEmpty ? "you@arcade.app" : trimmed
-        phase = .dashboard
+        // Drive the top-level phase from auth state: signed out → signIn,
+        // signed in → leave the recording flow alone but enter the app from signIn.
+        authCancellable = auth.$currentUser.sink { [weak self] user in
+            guard let self else { return }
+            if user == nil {
+                self.phase = .signIn
+            } else if self.phase == .signIn {
+                self.phase = .dashboard
+            }
+        }
+        auth.restore()   // automatic session restore on launch
     }
 
     func signOut() {
-        accountEmail = nil
-        phase = .signIn
+        auth.signOut()   // phase follows via the auth subscription
     }
 
     /// Begin a new recording session: lock config, show overlays, run countdown.

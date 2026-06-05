@@ -1,32 +1,35 @@
 import Foundation
 import CoreGraphics
 
-/// Video quality presets. MVP defaults to 1080p.
+/// Output resolution presets. On a Retina display, 720p/1080p/1440p are below
+/// the screen's native pixel density and will look softer than what you see;
+/// `native` exports at the display's own resolution (sharpest, larger files).
 enum VideoQuality: String, CaseIterable, Identifiable, Codable {
     case p720 = "720p"
     case p1080 = "1080p"
     case p1440 = "1440p"
+    case native = "Native"
 
     var id: String { rawValue }
 
-    /// Target output dimensions (16:9).
-    var dimensions: (width: Int, height: Int) {
+    var title: String {
+        self == .native ? "Native (sharpest)" : rawValue
+    }
+
+    /// Fixed export height in pixels, or nil to keep the captured native height.
+    var exportHeight: Int? {
         switch self {
-        case .p720:  return (1280, 720)
-        case .p1080: return (1920, 1080)
-        case .p1440: return (2560, 1440)
+        case .p720:   return 720
+        case .p1080:  return 1080
+        case .p1440:  return 1440
+        case .native: return nil
         }
     }
 
-    /// H.264 intermediate capture bitrate (bits/sec). Lower than original to
-    /// reduce file size while still surviving one FFmpeg re-encode cleanly.
-    var videoBitrate: Int {
-        switch self {
-        case .p720:  return 3_000_000
-        case .p1080: return 6_000_000
-        case .p1440: return 10_000_000
-        }
-    }
+    /// H.264 intermediate bitrate (bits/sec) for the WEBCAM stream (a small
+    /// circular crop — modest bitrate is plenty). The SCREEN intermediate uses a
+    /// higher, resolution-derived bitrate computed in ScreenRecorder.
+    var cameraBitrate: Int { 8_000_000 }
 }
 
 /// All user-selectable capture settings. Identifiers are stored as stable

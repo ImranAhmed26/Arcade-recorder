@@ -30,6 +30,25 @@ When asked to implement a system/feature that warrants isolation:
 4. **Push** the branch and **open a PR with base `dev`**.
 5. **Never open PRs into `main`.** The user promotes `dev → main` themselves.
 
+## Phasing rule — protect the recording pipeline
+
+Never bundle a large UI change with edits to the capture/session path in one step.
+Split work into phases and keep all pipeline-touching changes in a final, minimal,
+independently-revertable phase:
+
+1. **UI-only** — design system, navigation, layouts, restyles. Must wire to the
+   *existing* config/behavior and leave the recording engine byte-identical. Verify
+   visually + record one clip to confirm output is unchanged.
+2. **Config/state** — add new config fields + persistence + their controls, kept
+   **inert** (not yet read by the recording session). Verify persistence + UI.
+3. **Behavior integration** — the only phase that may affect capture: flip the
+   session to read the new state. Keep the diff tiny and run the full recording
+   regression (countdown variants, screen-only vs screen+camera, overlay capture-
+   exclusion, merge/export output).
+
+The capture engine (`ScreenRecorder` / `CameraRecorder` / `RecordingWriter`) should
+stay untouched unless a change is genuinely about capture itself.
+
 ## Pushing (important)
 
 This machine's SSH key authenticates as `imran-026`, which lacks push access to

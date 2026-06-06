@@ -339,6 +339,8 @@ final class RecordingSessionViewModel: ObservableObject {
     }
 
     private func capturePosition(at time: TimeInterval) {
+        // The circle isn't shown in Full Camera Mode — don't record its position then.
+        guard !isFullCamera else { return }
         guard let placement = webcamPlacementProvider?() else { return }
         // Skip if the circle hasn't moved more than ~0.3% of screen width (≈6px on 1920).
         if let last = positionKeyframes.last,

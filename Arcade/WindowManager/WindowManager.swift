@@ -11,6 +11,11 @@ final class WindowManager {
     private(set) var controlBarWindow: ControlBarWindow?
     private weak var mainWindow: NSWindow?
 
+    /// The display being recorded (for Full Camera full-screen sizing).
+    private var recordingScreen: NSScreen?
+    /// The webcam circle's frame, saved while it's expanded full-screen so it can be restored.
+    private var webcamCircleFrame: NSRect?
+
     /// Token for the active-Space change observer. We re-order overlays front
     /// every time the user switches Spaces so they remain visible above any
     /// fullscreen app the user switches to during a recording.
@@ -24,6 +29,7 @@ final class WindowManager {
     func showOverlays(for session: RecordingSessionViewModel,
                       showWebcam: Bool,
                       screen: NSScreen) {
+        recordingScreen = screen
         if showWebcam, webcamWindow == nil {
             let win = WebcamOverlayWindow(session: session)
             positionWebcam(win, on: screen)
@@ -56,6 +62,29 @@ final class WindowManager {
         controlBarWindow?.orderFrontRegardless()
     }
 
+    /// Expand the webcam overlay to fill the recorded display while Full Camera
+    /// Mode is active (live preview of the full-camera segment), and restore the
+    /// draggable circle when it ends. The window stays excluded from capture; the
+    /// screen keeps recording underneath (ignored for that interval at export).
+    func setWebcamFullScreen(_ full: Bool) {
+        guard let win = webcamWindow else { return }
+        if full {
+            guard let screen = recordingScreen ?? win.screen ?? NSScreen.main else { return }
+            if webcamCircleFrame == nil { webcamCircleFrame = win.frame }
+            win.ignoresMouseEvents = true            // let clicks pass to the screen below
+            win.isMovableByWindowBackground = false  // don't let a drag move the full-screen panel
+            win.setFrame(screen.frame, display: true, animate: false)
+            controlBarWindow?.orderFrontRegardless() // keep controls clickable on top
+        } else {
+            win.ignoresMouseEvents = false
+            win.isMovableByWindowBackground = true
+            if let frame = webcamCircleFrame {
+                win.setFrame(frame, display: true, animate: false)
+                webcamCircleFrame = nil
+            }
+        }
+    }
+
     /// The webcam circle's position as fractions of the recorded display
     /// (top-left origin), captured while the overlay window still exists.
     func webcamPlacement(displayID: CGDirectDisplayID?) -> WebcamPlacement? {
@@ -66,7 +95,9 @@ final class WindowManager {
         guard let screen, screen.frame.width > 0, screen.frame.height > 0 else { return nil }
 
         let s = screen.frame              // AppKit points, bottom-left origin
-        let w = win.frame
+        // Always report the CIRCLE geometry, even while expanded full-screen for
+        // Full Camera Mode, so placement/diameter stay correct.
+        let w = webcamCircleFrame ?? win.frame
         let topFromTop = (s.minY + s.height) - (w.minY + w.height)
         return WebcamPlacement(
             x: (w.minX - s.minX) / s.width,
@@ -84,6 +115,8 @@ final class WindowManager {
         controlBarWindow?.orderOut(nil)
         webcamWindow = nil
         controlBarWindow = nil
+        recordingScreen = nil
+        webcamCircleFrame = nil
         restoreMainWindow()
     }
 

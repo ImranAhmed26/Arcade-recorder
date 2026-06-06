@@ -34,11 +34,28 @@ struct CameraPreview: NSViewRepresentable {
     }
 }
 
-/// The circular webcam content shown inside the floating overlay window.
+/// The webcam content shown inside the floating overlay window. Renders as a
+/// circular PiP normally, and as a full-frame rectangle while Full Camera Mode
+/// is active (the window itself is resized to full screen by WindowManager).
 struct WebcamOverlayView: View {
     @ObservedObject var session: RecordingSessionViewModel
 
     var body: some View {
+        Group {
+            if session.isFullCamera {
+                // Full-frame preview (window covers the recorded display).
+                cameraContent
+            } else {
+                // Circular PiP with a thin black rim.
+                cameraContent
+                    .clipShape(Circle())
+                    .overlay(Circle().strokeBorder(.black.opacity(0.55), lineWidth: 1.5))
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    private var cameraContent: some View {
         ZStack {
             if session.webcamEnabled {
                 CameraPreview(session: session.camera.session)
@@ -50,7 +67,5 @@ struct WebcamOverlayView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .clipShape(Circle())
-        .overlay(Circle().strokeBorder(.black.opacity(0.55), lineWidth: 1.5))
     }
 }

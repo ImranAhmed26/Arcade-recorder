@@ -46,6 +46,7 @@ final class AppState: ObservableObject {
     /// Authentication (Google OAuth + Keychain). Drives the signIn ↔ dashboard phase.
     let auth = AuthService()
     private var authCancellable: AnyCancellable?
+    private var fullCameraCancellable: AnyCancellable?
 
     /// App appearance (System / Light / Dark), persisted across launches.
     @Published var themeMode: ThemeMode = .system {
@@ -134,6 +135,11 @@ final class AppState: ObservableObject {
                                           showWebcam: config.effectiveCameraID != nil,
                                           screen: targetScreen)
 
+        // Expand/restore the webcam overlay as Full Camera Mode toggles.
+        fullCameraCancellable = session.$isFullCamera.sink { full in
+            WindowManager.shared.setWebcamFullScreen(full)
+        }
+
         let displayID = config.displayID
         session.beginCountdown { [weak self] in
             guard let self else { return }
@@ -154,6 +160,7 @@ final class AppState: ObservableObject {
     }
 
     private func endSession(saved: Bool) {
+        fullCameraCancellable = nil
         WindowManager.shared.hideOverlays()
         session = nil
         isProcessing = false

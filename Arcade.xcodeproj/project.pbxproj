@@ -1,0 +1,502 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		02EB0D122C79EF8797A51BE9 /* ScreenRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 076A1FFA2A419962D38936DD /* ScreenRecorder.swift */; };
+		0452396502E6CA18B19C3FBD /* WebcamOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996B0381B5A877F733919D06 /* WebcamOverlayView.swift */; };
+		0AA23D94A14309EA814C6967 /* RecordingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7294AB77456E8298778BFF72 /* RecordingsView.swift */; };
+		0C7379DD2C6120891CBC6B47 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9FC4F7B3EEB237B393C814 /* SidebarView.swift */; };
+		14E54D563B7F078F2AA228F8 /* CameraRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F8FA5689F7AA0D46585EEA /* CameraRecorder.swift */; };
+		192B4391CDD029AFFD1BF323 /* CountdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB477CCB3D5C73E3B69B60DE /* CountdownView.swift */; };
+		1B6C3CEA19450D2D98CF312D /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E526A9B52F156A95CC474084 /* KeychainStore.swift */; };
+		1E544A30FCF0DF00D566231E /* GoogleAuthConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11AD0D55002CBB6D7F9C003 /* GoogleAuthConfig.swift */; };
+		3B43AD7D5680310ED546608C /* MergeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51212B8EE7F32D8C292D1FD6 /* MergeService.swift */; };
+		3EEF5B3DC706375B658F9CBE /* ArcadeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F98671C7C1410739E0BE6BD /* ArcadeApp.swift */; };
+		401BE76FC33FDA4991BECAF5 /* UserSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F48EBF5851EC3E912904A6F /* UserSession.swift */; };
+		574BA27B17422D78F3A991DA /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDFEF4E99808592E7EB9321 /* Theme.swift */; };
+		5EE9D466A1E633B45577A5C5 /* ControlBarWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6194889BDD1219F6F6F35585 /* ControlBarWindow.swift */; };
+		5F03FE9E378638026E9453E3 /* PKCE.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53DC7BF93BF4E96196F31EA2 /* PKCE.swift */; };
+		608143784B926ABFD1A2A44A /* MainWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2487DAB118777F40885A72DB /* MainWindowView.swift */; };
+		667DF683164864664F4A2931 /* DeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE422419A261093CDA12634 /* DeviceManager.swift */; };
+		69A2CDE1CE46B28F034087A6 /* CaptureDevices.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6DF3B08A979F7B451944F17 /* CaptureDevices.swift */; };
+		6EA93FF2497F2E4DA79ECE75 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75F616635ACB70D431A2E2E /* SignInView.swift */; };
+		766B69668FA6531FAB130422 /* UIComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66766D31E0A4D597D43F96BD /* UIComponents.swift */; };
+		7853B7F127F6069F5C2F2FD7 /* Recording.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6A0888D89905E97AD52623 /* Recording.swift */; };
+		7F93D2AD0E6D636141C13D8C /* WindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC60C7B35F2F4180222B168 /* WindowManager.swift */; };
+		80C2EF41BDA8EA4C1167250B /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0B23D7ADD034961455742 /* DashboardViewModel.swift */; };
+		81D56070AB54E5160251D304 /* RecordingConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF1686A48AC2F8A8EC0F35F /* RecordingConfig.swift */; };
+		9DFC79071244BEB421C5FACE /* WebcamOverlayWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FFA5ECAB5D5247A5848D49 /* WebcamOverlayWindow.swift */; };
+		B0E6293BC8FF7389511378A7 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 909F7AB0DC87F06B21FE6562 /* AppState.swift */; };
+		BA887C7CB52CED724380CE71 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C1ECC690C1E3EA185D8FD /* AuthService.swift */; };
+		BF9B0EFAA841E6D6B1A1D2FA /* RecordingWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47D3B4AA34427E488D3F7C5 /* RecordingWriter.swift */; };
+		C86D0275E53B1519D0040A40 /* GoogleAuthProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E9FD70C70F965220173BB8 /* GoogleAuthProvider.swift */; };
+		D2D163E92458E63B49DE6876 /* RecordingSessionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E2B3C68CFF8030B6DE11CF /* RecordingSessionViewModel.swift */; };
+		DA65A012EF6AB8C44C4440B4 /* Thumbnailer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993423DBEE894528D60436F4 /* Thumbnailer.swift */; };
+		DCBC82B7F2F4D8C772433A99 /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5BFA753B6927E5C0968A3E /* Formatters.swift */; };
+		E01A7D3AD96B7509644DA907 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB3ED1A434E1776C691A1CE /* HomeView.swift */; };
+		E81572AB73060DC678DEE035 /* ControlBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5592091EE0AF5BD23772A8BE /* ControlBarView.swift */; };
+		F8DFA5A0FBDC375C2E0978E2 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC29C4CDA1672B7880F568BC /* StorageManager.swift */; };
+		FC44D731BDABB8C808487E5C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C79F82C5A995697FA4C0102 /* SettingsView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		076A1FFA2A419962D38936DD /* ScreenRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenRecorder.swift; sourceTree = "<group>"; };
+		0D9FC4F7B3EEB237B393C814 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
+		12E2B3C68CFF8030B6DE11CF /* RecordingSessionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingSessionViewModel.swift; sourceTree = "<group>"; };
+		1EB3ED1A434E1776C691A1CE /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		1EDFEF4E99808592E7EB9321 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		2487DAB118777F40885A72DB /* MainWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowView.swift; sourceTree = "<group>"; };
+		2C79F82C5A995697FA4C0102 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		3AE422419A261093CDA12634 /* DeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceManager.swift; sourceTree = "<group>"; };
+		4A6A0888D89905E97AD52623 /* Recording.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recording.swift; sourceTree = "<group>"; };
+		4AF1686A48AC2F8A8EC0F35F /* RecordingConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingConfig.swift; sourceTree = "<group>"; };
+		51212B8EE7F32D8C292D1FD6 /* MergeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeService.swift; sourceTree = "<group>"; };
+		53DC7BF93BF4E96196F31EA2 /* PKCE.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKCE.swift; sourceTree = "<group>"; };
+		54FFA5ECAB5D5247A5848D49 /* WebcamOverlayWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebcamOverlayWindow.swift; sourceTree = "<group>"; };
+		5592091EE0AF5BD23772A8BE /* ControlBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlBarView.swift; sourceTree = "<group>"; };
+		6194889BDD1219F6F6F35585 /* ControlBarWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlBarWindow.swift; sourceTree = "<group>"; };
+		66766D31E0A4D597D43F96BD /* UIComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIComponents.swift; sourceTree = "<group>"; };
+		6F98671C7C1410739E0BE6BD /* ArcadeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArcadeApp.swift; sourceTree = "<group>"; };
+		7294AB77456E8298778BFF72 /* RecordingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingsView.swift; sourceTree = "<group>"; };
+		8F48EBF5851EC3E912904A6F /* UserSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSession.swift; sourceTree = "<group>"; };
+		909F7AB0DC87F06B21FE6562 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		993423DBEE894528D60436F4 /* Thumbnailer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thumbnailer.swift; sourceTree = "<group>"; };
+		996B0381B5A877F733919D06 /* WebcamOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebcamOverlayView.swift; sourceTree = "<group>"; };
+		99A0B23D7ADD034961455742 /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
+		A11AD0D55002CBB6D7F9C003 /* GoogleAuthConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAuthConfig.swift; sourceTree = "<group>"; };
+		A6DF3B08A979F7B451944F17 /* CaptureDevices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureDevices.swift; sourceTree = "<group>"; };
+		A75F616635ACB70D431A2E2E /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		A923426938915389794CCE05 /* Arcade.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Arcade.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AC29C4CDA1672B7880F568BC /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		C7F30879A58C91BCBC90622B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		CA5BFA753B6927E5C0968A3E /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
+		CB477CCB3D5C73E3B69B60DE /* CountdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownView.swift; sourceTree = "<group>"; };
+		DC7D6F81EAA053E54160FE37 /* Arcade.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Arcade.entitlements; sourceTree = "<group>"; };
+		E43C1ECC690C1E3EA185D8FD /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		E47D3B4AA34427E488D3F7C5 /* RecordingWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingWriter.swift; sourceTree = "<group>"; };
+		E526A9B52F156A95CC474084 /* KeychainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStore.swift; sourceTree = "<group>"; };
+		E9E9FD70C70F965220173BB8 /* GoogleAuthProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAuthProvider.swift; sourceTree = "<group>"; };
+		EEC60C7B35F2F4180222B168 /* WindowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowManager.swift; sourceTree = "<group>"; };
+		F7F8FA5689F7AA0D46585EEA /* CameraRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraRecorder.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		11854B73A671EB15F6EB6A59 /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				1EDFEF4E99808592E7EB9321 /* Theme.swift */,
+				66766D31E0A4D597D43F96BD /* UIComponents.swift */,
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		2B10FDF394DD8ECA1D99DF13 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				CA5BFA753B6927E5C0968A3E /* Formatters.swift */,
+				51212B8EE7F32D8C292D1FD6 /* MergeService.swift */,
+				AC29C4CDA1672B7880F568BC /* StorageManager.swift */,
+				993423DBEE894528D60436F4 /* Thumbnailer.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		3F43286B69C7DA92C08C5208 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				E43C1ECC690C1E3EA185D8FD /* AuthService.swift */,
+				A11AD0D55002CBB6D7F9C003 /* GoogleAuthConfig.swift */,
+				E9E9FD70C70F965220173BB8 /* GoogleAuthProvider.swift */,
+				E526A9B52F156A95CC474084 /* KeychainStore.swift */,
+				53DC7BF93BF4E96196F31EA2 /* PKCE.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		829D1100865F3BA37BED8A29 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				909F7AB0DC87F06B21FE6562 /* AppState.swift */,
+				A6DF3B08A979F7B451944F17 /* CaptureDevices.swift */,
+				4A6A0888D89905E97AD52623 /* Recording.swift */,
+				4AF1686A48AC2F8A8EC0F35F /* RecordingConfig.swift */,
+				8F48EBF5851EC3E912904A6F /* UserSession.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		9E0DD32CCD91DF08C993F3C4 /* Arcade */ = {
+			isa = PBXGroup;
+			children = (
+				DC7D6F81EAA053E54160FE37 /* Arcade.entitlements */,
+				6F98671C7C1410739E0BE6BD /* ArcadeApp.swift */,
+				C7F30879A58C91BCBC90622B /* Info.plist */,
+				3F43286B69C7DA92C08C5208 /* Auth */,
+				11854B73A671EB15F6EB6A59 /* DesignSystem */,
+				829D1100865F3BA37BED8A29 /* Models */,
+				EE78090ED15926057FAAFA61 /* RecordingEngine */,
+				2B10FDF394DD8ECA1D99DF13 /* Utils */,
+				C8EB5C9A20A1AFE7EC8CCB88 /* ViewModels */,
+				B6E01A1C9CCC6E400C2F975B /* Views */,
+				DFB15E3461E6448CEC1E14FF /* WindowManager */,
+			);
+			path = Arcade;
+			sourceTree = "<group>";
+		};
+		9EFDF3FC0887387DFA9F5D48 = {
+			isa = PBXGroup;
+			children = (
+				9E0DD32CCD91DF08C993F3C4 /* Arcade */,
+				F208C8639BD8F804E4F93BBB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B6E01A1C9CCC6E400C2F975B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5592091EE0AF5BD23772A8BE /* ControlBarView.swift */,
+				CB477CCB3D5C73E3B69B60DE /* CountdownView.swift */,
+				1EB3ED1A434E1776C691A1CE /* HomeView.swift */,
+				2487DAB118777F40885A72DB /* MainWindowView.swift */,
+				7294AB77456E8298778BFF72 /* RecordingsView.swift */,
+				2C79F82C5A995697FA4C0102 /* SettingsView.swift */,
+				0D9FC4F7B3EEB237B393C814 /* SidebarView.swift */,
+				A75F616635ACB70D431A2E2E /* SignInView.swift */,
+				996B0381B5A877F733919D06 /* WebcamOverlayView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		C8EB5C9A20A1AFE7EC8CCB88 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				99A0B23D7ADD034961455742 /* DashboardViewModel.swift */,
+				3AE422419A261093CDA12634 /* DeviceManager.swift */,
+				12E2B3C68CFF8030B6DE11CF /* RecordingSessionViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		DFB15E3461E6448CEC1E14FF /* WindowManager */ = {
+			isa = PBXGroup;
+			children = (
+				6194889BDD1219F6F6F35585 /* ControlBarWindow.swift */,
+				54FFA5ECAB5D5247A5848D49 /* WebcamOverlayWindow.swift */,
+				EEC60C7B35F2F4180222B168 /* WindowManager.swift */,
+			);
+			path = WindowManager;
+			sourceTree = "<group>";
+		};
+		EE78090ED15926057FAAFA61 /* RecordingEngine */ = {
+			isa = PBXGroup;
+			children = (
+				F7F8FA5689F7AA0D46585EEA /* CameraRecorder.swift */,
+				E47D3B4AA34427E488D3F7C5 /* RecordingWriter.swift */,
+				076A1FFA2A419962D38936DD /* ScreenRecorder.swift */,
+			);
+			path = RecordingEngine;
+			sourceTree = "<group>";
+		};
+		F208C8639BD8F804E4F93BBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A923426938915389794CCE05 /* Arcade.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3BA5B668BE20D008A6D433FF /* Arcade */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3A5BD52D347DA1A521BD9C7B /* Build configuration list for PBXNativeTarget "Arcade" */;
+			buildPhases = (
+				44191527D3FDFF8FFAA68364 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Arcade;
+			packageProductDependencies = (
+			);
+			productName = Arcade;
+			productReference = A923426938915389794CCE05 /* Arcade.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8C1C3C9AEE675ABE26C7E178 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					3BA5B668BE20D008A6D433FF = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Manual;
+					};
+				};
+			};
+			buildConfigurationList = A4877DEEEE15E28A59F74785 /* Build configuration list for PBXProject "Arcade" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 9EFDF3FC0887387DFA9F5D48;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = F208C8639BD8F804E4F93BBB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3BA5B668BE20D008A6D433FF /* Arcade */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		44191527D3FDFF8FFAA68364 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B0E6293BC8FF7389511378A7 /* AppState.swift in Sources */,
+				3EEF5B3DC706375B658F9CBE /* ArcadeApp.swift in Sources */,
+				BA887C7CB52CED724380CE71 /* AuthService.swift in Sources */,
+				14E54D563B7F078F2AA228F8 /* CameraRecorder.swift in Sources */,
+				69A2CDE1CE46B28F034087A6 /* CaptureDevices.swift in Sources */,
+				E81572AB73060DC678DEE035 /* ControlBarView.swift in Sources */,
+				5EE9D466A1E633B45577A5C5 /* ControlBarWindow.swift in Sources */,
+				192B4391CDD029AFFD1BF323 /* CountdownView.swift in Sources */,
+				80C2EF41BDA8EA4C1167250B /* DashboardViewModel.swift in Sources */,
+				667DF683164864664F4A2931 /* DeviceManager.swift in Sources */,
+				DCBC82B7F2F4D8C772433A99 /* Formatters.swift in Sources */,
+				1E544A30FCF0DF00D566231E /* GoogleAuthConfig.swift in Sources */,
+				C86D0275E53B1519D0040A40 /* GoogleAuthProvider.swift in Sources */,
+				E01A7D3AD96B7509644DA907 /* HomeView.swift in Sources */,
+				1B6C3CEA19450D2D98CF312D /* KeychainStore.swift in Sources */,
+				608143784B926ABFD1A2A44A /* MainWindowView.swift in Sources */,
+				3B43AD7D5680310ED546608C /* MergeService.swift in Sources */,
+				5F03FE9E378638026E9453E3 /* PKCE.swift in Sources */,
+				7853B7F127F6069F5C2F2FD7 /* Recording.swift in Sources */,
+				81D56070AB54E5160251D304 /* RecordingConfig.swift in Sources */,
+				D2D163E92458E63B49DE6876 /* RecordingSessionViewModel.swift in Sources */,
+				BF9B0EFAA841E6D6B1A1D2FA /* RecordingWriter.swift in Sources */,
+				0AA23D94A14309EA814C6967 /* RecordingsView.swift in Sources */,
+				02EB0D122C79EF8797A51BE9 /* ScreenRecorder.swift in Sources */,
+				FC44D731BDABB8C808487E5C /* SettingsView.swift in Sources */,
+				0C7379DD2C6120891CBC6B47 /* SidebarView.swift in Sources */,
+				6EA93FF2497F2E4DA79ECE75 /* SignInView.swift in Sources */,
+				F8DFA5A0FBDC375C2E0978E2 /* StorageManager.swift in Sources */,
+				574BA27B17422D78F3A991DA /* Theme.swift in Sources */,
+				DA65A012EF6AB8C44C4440B4 /* Thumbnailer.swift in Sources */,
+				766B69668FA6531FAB130422 /* UIComponents.swift in Sources */,
+				401BE76FC33FDA4991BECAF5 /* UserSession.swift in Sources */,
+				0452396502E6CA18B19C3FBD /* WebcamOverlayView.swift in Sources */,
+				9DFC79071244BEB421C5FACE /* WebcamOverlayWindow.swift in Sources */,
+				7F93D2AD0E6D636141C13D8C /* WindowManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		4E1E0247039FC6D0B28CFA38 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "";
+				CODE_SIGN_ENTITLEMENTS = Arcade/Arcade.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Arcade/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.binate.arcade;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		558EC052142A291493895177 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = EAB573A06876C51DCC001119152155260C5E47FB;
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = Arcade;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		5FF86DCF42E96169B2EAFCC8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = EAB573A06876C51DCC001119152155260C5E47FB;
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = Arcade;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		F57CCFFFA66C78C6155B10E8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "";
+				CODE_SIGN_ENTITLEMENTS = Arcade/Arcade.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Arcade/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.binate.arcade;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3A5BD52D347DA1A521BD9C7B /* Build configuration list for PBXNativeTarget "Arcade" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F57CCFFFA66C78C6155B10E8 /* Debug */,
+				4E1E0247039FC6D0B28CFA38 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		A4877DEEEE15E28A59F74785 /* Build configuration list for PBXProject "Arcade" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				558EC052142A291493895177 /* Debug */,
+				5FF86DCF42E96169B2EAFCC8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 8C1C3C9AEE675ABE26C7E178 /* Project object */;
+}

@@ -17,6 +17,24 @@ struct WebcamPositionKeyframe: Codable {
     let y: Double      // top edge as fraction of display height (top-left = FFmpeg origin)
 }
 
+/// Recording mode of a segment within a session.
+/// - `normal`: screen + circular webcam PiP (the default).
+/// - `fullCamera`: a full-screen webcam segment (Full Camera Mode).
+enum SegmentMode: String, Codable, Equatable {
+    case normal
+    case fullCamera
+}
+
+/// One contiguous mode segment of a recording, on the pause-excluded media clock
+/// (same clock as `WebcamPositionKeyframe`). Segments are recorded during capture
+/// and, in a later phase, stitched in order at export. While the export ignores
+/// them, a recording stays byte-identical to the pre-segment behavior.
+struct RecordingSegment: Codable, Equatable {
+    let mode: SegmentMode
+    let start: TimeInterval
+    var end: TimeInterval
+}
+
 /// A single saved recording. Each recording lives in its own folder:
 ///   <saveDir>/<id>/final.mp4   (merged webcam + screen — the primary output)
 ///   <saveDir>/<id>/screen.mp4  (raw screen + system audio, removed after merge)
@@ -38,6 +56,10 @@ struct Recording: Identifiable, Codable, Equatable {
 
     /// Where the webcam circle sat on screen, used by the merge step.
     var webcamPlacement: WebcamPlacement?
+
+    /// Ordered mode segments (Full Camera Mode). Empty for older recordings.
+    /// Currently recorded for metadata only; export stitching lands in a later phase.
+    var segments: [RecordingSegment] = []
 
     static let screenFile = "screen.mp4"
     static let webcamFile = "webcam.mp4"

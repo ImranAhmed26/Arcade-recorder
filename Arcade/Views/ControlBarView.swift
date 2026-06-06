@@ -24,6 +24,20 @@ struct ControlBarView: View {
             controlButton(systemName: session.webcamEnabled ? "video.fill" : "video.slash.fill",
                           active: session.webcamEnabled) { session.toggleWebcam() }
 
+            // Full Camera Mode — only when a webcam is in the session.
+            if session.hasCamera {
+                Button { session.toggleFullCamera() } label: {
+                    Image(systemName: "person.crop.rectangle.fill")
+                        .foregroundStyle(session.isFullCamera ? .black : .white)
+                        .frame(width: 30, height: 30)
+                        .background(session.isFullCamera ? Color.white : Color.clear,
+                                    in: RoundedRectangle(cornerRadius: 7))
+                }
+                .buttonStyle(.plain)
+                .disabled(!isRecording)
+                .help(session.isFullCamera ? "Exit Full Camera Mode" : "Full Camera Mode")
+            }
+
             controlButton(systemName: session.stage == .paused ? "play.fill" : "pause.fill",
                           active: true, disabled: !canPause) { session.togglePause() }
 

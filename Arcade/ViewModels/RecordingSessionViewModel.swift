@@ -23,6 +23,12 @@ final class RecordingSessionViewModel: ObservableObject {
     /// True for the brief "REC" flash at the end of the countdown.
     @Published var showRecFlash = false
 
+    /// Full Camera Mode active (full-screen webcam segment). Toggled during recording.
+    @Published var isFullCamera = false
+
+    /// Whether this session has a webcam at all (Full Camera Mode requires one).
+    let hasCamera: Bool
+
     let camera = CameraRecorder()
     private let screen = ScreenRecorder()
     private let config: RecordingConfig
@@ -32,6 +38,11 @@ final class RecordingSessionViewModel: ObservableObject {
     private var positionKeyframes: [WebcamPositionKeyframe] = []
     private var positionElapsed: TimeInterval = 0
     private var positionTimer: AnyCancellable?
+
+    // Mode segments on the pause-excluded media clock (`positionElapsed`).
+    private var segments: [RecordingSegment] = []
+    private var currentSegmentStart: TimeInterval = 0
+    private var currentMode: SegmentMode = .normal
 
     let recordingID = UUID()
     private var folder: URL?
@@ -55,6 +66,7 @@ final class RecordingSessionViewModel: ObservableObject {
         self.config = config
         self.micEnabled = config.captureMicrophone
         self.webcamEnabled = config.cameraID != nil
+        self.hasCamera = config.cameraID != nil
     }
 
     // MARK: - Camera preview
@@ -84,6 +96,11 @@ final class RecordingSessionViewModel: ObservableObject {
             try? await Task.sleep(nanoseconds: 600_000_000)
             showRecFlash = false
             stage = .recording
+            // Open the first segment (normal mode) at the start of the media clock.
+            segments = []
+            currentMode = .normal
+            currentSegmentStart = 0
+            isFullCamera = false
             startTimer()
             capturePosition(at: 0)   // t=0 keyframe before timer fires
             startPositionTimer()
@@ -142,6 +159,28 @@ final class RecordingSessionViewModel: ObservableObject {
         camera.setVideoEnabled(webcamEnabled)
     }
 
+    /// Switch into/out of Full Camera Mode, closing the current mode segment and
+    /// opening a new one at the current media time. Capture pipeline is untouched —
+    /// this only records segment boundaries (used by export in a later phase).
+    func toggleFullCamera() {
+        guard hasCamera, stage == .recording else { return }
+        segments.append(RecordingSegment(mode: currentMode,
+                                         start: currentSegmentStart,
+                                         end: positionElapsed))
+        currentMode = (currentMode == .normal) ? .fullCamera : .normal
+        currentSegmentStart = positionElapsed
+        isFullCamera = (currentMode == .fullCamera)
+    }
+
+    /// Close the in-progress segment at the final media time and return the list.
+    private func closeSegments() -> [RecordingSegment] {
+        var result = segments
+        result.append(RecordingSegment(mode: currentMode,
+                                       start: currentSegmentStart,
+                                       end: positionElapsed))
+        return result
+    }
+
     func togglePause() {
         switch stage {
         case .recording:
@@ -165,6 +204,7 @@ final class RecordingSessionViewModel: ObservableObject {
         // Snapshot overlay-dependent state while windows still exist.
         let placement = webcamPlacementProvider?()
         let capturedKeyframes = positionKeyframes
+        let capturedSegments = closeSegments()
         let hasWebcamVideo = camera.hasVideoTrack
 
         // Stop the AVCaptureSession — fast, non-blocking.
@@ -190,7 +230,8 @@ final class RecordingSessionViewModel: ObservableObject {
             await finalize(hasWebcamVideo: hasWebcamVideo,
                            webcamFileSaved: webcamFileSaved,
                            placement: placement,
-                           keyframes: capturedKeyframes)
+                           keyframes: capturedKeyframes,
+                           segments: capturedSegments)
         }
     }
 
@@ -212,7 +253,8 @@ final class RecordingSessionViewModel: ObservableObject {
     private func finalize(hasWebcamVideo: Bool,
                           webcamFileSaved: Bool,
                           placement: WebcamPlacement?,
-                          keyframes: [WebcamPositionKeyframe]) async {
+                          keyframes: [WebcamPositionKeyframe],
+                          segments: [RecordingSegment]) async {
         var recording = Recording(
             id: recordingID,
             displayName: Formatters.defaultName(startedAt),
@@ -220,6 +262,9 @@ final class RecordingSessionViewModel: ObservableObject {
             duration: elapsed,
             hasWebcam: hasWebcamVideo,
             webcamPlacement: hasWebcamVideo ? placement : nil)
+        // Recorded for metadata only in this phase — export still ignores segments,
+        // so the produced video is byte-identical to the pre-segment behavior.
+        recording.segments = segments
         StorageManager.shared.writeMeta(recording)
 
         guard let folder else { onFinish?(true); return }

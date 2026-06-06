@@ -1,12 +1,13 @@
 import SwiftUI
 
 enum SidebarSection: String, Hashable, CaseIterable, Identifiable {
-    case home, recordings, settings
+    case home, projects, recordings, settings
     var id: String { rawValue }
 
     var title: String {
         switch self {
         case .home: return "Home"
+        case .projects: return "Projects"
         case .recordings: return "Recordings"
         case .settings: return "Settings"
         }
@@ -15,6 +16,7 @@ enum SidebarSection: String, Hashable, CaseIterable, Identifiable {
     var systemImage: String {
         switch self {
         case .home: return "house"
+        case .projects: return "square.stack.3d.up"
         case .recordings: return "square.stack"
         case .settings: return "gearshape"
         }

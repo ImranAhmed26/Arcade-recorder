@@ -143,4 +143,72 @@ final class StorageManager: ObservableObject {
             NSWorkspace.shared.selectFile(nil, inFileViewerRootedAtPath: dir.path)
         }
     }
+
+    // MARK: - Projects (tutorial editor)
+
+    /// `<saveDir>/Projects` — kept in its own subfolder so it never collides with
+    /// recording folders (loadRecordings ignores it: no Recording meta inside).
+    func projectsRoot() throws -> URL {
+        guard let root = saveDirectory else {
+            throw NSError(domain: "Arcade", code: 1,
+                          userInfo: [NSLocalizedDescriptionKey: "No save directory selected."])
+        }
+        let dir = root.appendingPathComponent("Projects", isDirectory: true)
+        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        return dir
+    }
+
+    func projectFolder(_ id: UUID) throws -> URL {
+        let dir = try projectsRoot().appendingPathComponent(id.uuidString, isDirectory: true)
+        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        return dir
+    }
+
+    func projectURL(_ project: Project, fileName: String) -> URL? {
+        (try? projectsRoot())?
+            .appendingPathComponent(project.folderName, isDirectory: true)
+            .appendingPathComponent(fileName)
+    }
+
+    func writeProject(_ project: Project) {
+        guard let folder = try? projectFolder(project.id) else { return }
+        encoder.outputFormatting = [.prettyPrinted]
+        if let data = try? encoder.encode(project) {
+            try? data.write(to: folder.appendingPathComponent(Project.metaFile))
+        }
+    }
+
+    /// Projects with a readable project.json and an existing base file. Newest first.
+    func loadProjects() -> [Project] {
+        guard let root = try? projectsRoot(),
+              let entries = try? FileManager.default.contentsOfDirectory(
+                at: root, includingPropertiesForKeys: nil) else { return [] }
+        var result: [Project] = []
+        for folder in entries where folder.hasDirectoryPath {
+            let metaURL = folder.appendingPathComponent(Project.metaFile)
+            guard let data = try? Data(contentsOf: metaURL),
+                  let project = try? decoder.decode(Project.self, from: data) else { continue }
+            let base = folder.appendingPathComponent(project.baseFileName)
+            guard FileManager.default.fileExists(atPath: base.path) else { continue }
+            result.append(project)
+        }
+        return result.sorted { $0.createdAt > $1.createdAt }
+    }
+
+    func deleteProject(_ project: Project) {
+        guard let folder = try? projectsRoot()
+            .appendingPathComponent(project.folderName, isDirectory: true) else { return }
+        try? FileManager.default.removeItem(at: folder)
+    }
+
+    /// Create a project by copying a source video in as the self-contained base asset.
+    func createProject(named name: String, baseSource: URL, baseDuration: Double) throws -> Project {
+        let project = Project(name: name, baseDuration: baseDuration)
+        let folder = try projectFolder(project.id)
+        let baseDest = folder.appendingPathComponent(Project.baseFile)
+        try? FileManager.default.removeItem(at: baseDest)
+        try FileManager.default.copyItem(at: baseSource, to: baseDest)
+        writeProject(project)
+        return project
+    }
 }

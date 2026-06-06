@@ -20,6 +20,8 @@ struct MainWindowView: View {
                     switch section {
                     case .home:
                         HomeView(dashboard: dashboard, goToRecordings: { section = .recordings })
+                    case .projects:
+                        ProjectsView()
                     case .recordings:
                         RecordingsView(model: dashboard)
                     case .settings:

@@ -25,8 +25,15 @@ final class ControlBarWindow: NSPanel {
         isMovableByWindowBackground = true
         collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary, .stationary, .ignoresCycle]
 
+        // Size the window to the control bar's intrinsic content size so all
+        // controls fit (it grows/shrinks with the number of buttons — e.g. the
+        // Full Camera toggle — instead of clipping against a fixed width).
         let hosting = NSHostingView(rootView: ControlBarView(session: session))
-        hosting.frame = contentLayoutRect
+        let fitting = hosting.fittingSize
+        let w = fitting.width  > 0 ? fitting.width  : 480
+        let h = fitting.height > 0 ? fitting.height : 56
+        setContentSize(NSSize(width: w, height: h))
+        hosting.frame = NSRect(x: 0, y: 0, width: w, height: h)
         contentView = hosting
     }
 

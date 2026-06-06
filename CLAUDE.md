@@ -22,8 +22,13 @@ When asked to implement a system/feature that warrants isolation:
 2. Implement, then **commit with a clear, descriptive message** (imperative
    subject + a body explaining what/why). End commit messages with:
    `Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>`
-3. **Push** the branch and **open a PR with base `dev`**.
-4. **Never open PRs into `main`.** The user promotes `dev → main` themselves.
+3. **Before pushing or opening the PR, sync with the latest `dev`**
+   (`git fetch origin dev` then `git rebase origin/dev`, or merge). **Resolve any
+   merge conflicts** and re-verify the build so the PR merges cleanly with no
+   conflicts. If a rebase rewrote history on an already-pushed branch, push with
+   `--force-with-lease`.
+4. **Push** the branch and **open a PR with base `dev`**.
+5. **Never open PRs into `main`.** The user promotes `dev → main` themselves.
 
 ## Pushing (important)
 

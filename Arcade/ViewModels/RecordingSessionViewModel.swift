@@ -279,6 +279,7 @@ final class RecordingSessionViewModel: ObservableObject {
         let diameter = placement?.diameter ?? 0.09375   // 180pt / 1920px default
         let kf = hasWebcamVideo ? keyframes : []
         let targetHeight = config.quality.exportHeight   // nil = native
+        let frameRate = config.frameRate
         do {
             try await Task.detached(priority: .userInitiated) {
                 _ = try MergeService.merge(screen: screenURL,
@@ -287,6 +288,8 @@ final class RecordingSessionViewModel: ObservableObject {
                                            diameter: diameter,
                                            targetHeight: targetHeight,
                                            quality: 70,   // higher constant-quality → crisper text
+                                           frameRate: frameRate,
+                                           segments: segments,
                                            output: outputURL)
             }.value
             recording.mergedFileName = Recording.mergedFile

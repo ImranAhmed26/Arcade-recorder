@@ -1,6 +1,24 @@
 import SwiftUI
 import AVKit
 
+/// AppKit `AVPlayerView` wrapper. Used instead of SwiftUI's `VideoPlayer`, which
+/// crashes during generic-metadata instantiation (_AVKit_SwiftUI) on this macOS.
+struct PlayerView: NSViewRepresentable {
+    let player: AVPlayer
+
+    func makeNSView(context: Context) -> AVPlayerView {
+        let view = AVPlayerView()
+        view.player = player
+        view.controlsStyle = .inline
+        view.videoGravity = .resizeAspect
+        return view
+    }
+
+    func updateNSView(_ nsView: AVPlayerView, context: Context) {
+        if nsView.player !== player { nsView.player = player }
+    }
+}
+
 /// Project editor. Phase A: base playback + project summary. Narration recording,
 /// the timeline, base trimming, and export land in later phases.
 struct ProjectEditorView: View {
@@ -12,7 +30,7 @@ struct ProjectEditorView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            VideoPlayer(player: vm.player)
+            PlayerView(player: vm.player)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(.black)
 

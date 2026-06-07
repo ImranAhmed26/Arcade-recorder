@@ -39,9 +39,19 @@ struct ProjectEditorView: View {
 
             Divider()
 
-            // Clip list (Phase B) and toolbar.
+            // Timeline (Phase C) + toolbar.
             VStack(spacing: 0) {
-                if !vm.project.clips.isEmpty { clipList }
+                Divider()
+                TimelineView(
+                    project: $vm.project,
+                    playhead: $vm.playhead,
+                    onSeek: { vm.seek(to: $0) },
+                    onChanged: { vm.save() },
+                    onDeleteClip: { vm.deleteClip($0) }
+                )
+                .padding(.horizontal, Theme.Space.md)
+                .padding(.vertical, Theme.Space.sm)
+                .background(Theme.windowBackground)
                 Divider()
                 toolbar
             }
@@ -94,47 +104,7 @@ struct ProjectEditorView: View {
             .position(x: x + d / 2, y: y + d / 2)
     }
 
-    // MARK: - Clip list
 
-    private var clipList: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            VStack(spacing: 0) {
-                ForEach(vm.project.clips) { clip in
-                    HStack(spacing: Theme.Space.md) {
-                        Image(systemName: "circle.fill")
-                            .font(.caption2)
-                            .foregroundStyle(Theme.primary)
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text("Narration at \(Formatters.duration(clip.timelineStart))")
-                                .font(.subheadline.weight(.medium))
-                            Text(Formatters.duration(clip.duration))
-                                .font(.caption)
-                                .foregroundStyle(Theme.textSecondary)
-                        }
-                        Spacer()
-                        Button {
-                            // Seek the base player to the clip's start.
-                            vm.player.seek(to: CMTime(seconds: clip.timelineStart,
-                                                      preferredTimescale: 600))
-                        } label: { Image(systemName: "arrow.left.to.line") }
-                        .buttonStyle(.borderless)
-                        .help("Seek to clip start")
-
-                        Button(role: .destructive) { vm.deleteClip(clip) } label: {
-                            Image(systemName: "trash")
-                        }
-                        .buttonStyle(.borderless)
-                        .help("Delete clip")
-                    }
-                    .padding(.horizontal, Theme.Space.lg)
-                    .padding(.vertical, Theme.Space.sm)
-                    Divider()
-                }
-            }
-        }
-        .frame(maxHeight: 140)
-        .background(Theme.windowBackground)
-    }
 
     // MARK: - Toolbar
 

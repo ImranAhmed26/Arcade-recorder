@@ -36,6 +36,7 @@
 		81D56070AB54E5160251D304 /* RecordingConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF1686A48AC2F8A8EC0F35F /* RecordingConfig.swift */; };
 		9DFC79071244BEB421C5FACE /* WebcamOverlayWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FFA5ECAB5D5247A5848D49 /* WebcamOverlayWindow.swift */; };
 		B0E6293BC8FF7389511378A7 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 909F7AB0DC87F06B21FE6562 /* AppState.swift */; };
+		B3CB831971C1863FD128DA55 /* TimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A611B6B9FCCC1323E04A3A4 /* TimelineView.swift */; };
 		BA887C7CB52CED724380CE71 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C1ECC690C1E3EA185D8FD /* AuthService.swift */; };
 		BF9B0EFAA841E6D6B1A1D2FA /* RecordingWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47D3B4AA34427E488D3F7C5 /* RecordingWriter.swift */; };
 		C86D0275E53B1519D0040A40 /* GoogleAuthProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E9FD70C70F965220173BB8 /* GoogleAuthProvider.swift */; };
@@ -65,6 +66,7 @@
 		53DC7BF93BF4E96196F31EA2 /* PKCE.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKCE.swift; sourceTree = "<group>"; };
 		54FFA5ECAB5D5247A5848D49 /* WebcamOverlayWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebcamOverlayWindow.swift; sourceTree = "<group>"; };
 		5592091EE0AF5BD23772A8BE /* ControlBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlBarView.swift; sourceTree = "<group>"; };
+		5A611B6B9FCCC1323E04A3A4 /* TimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineView.swift; sourceTree = "<group>"; };
 		6194889BDD1219F6F6F35585 /* ControlBarWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlBarWindow.swift; sourceTree = "<group>"; };
 		66766D31E0A4D597D43F96BD /* UIComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIComponents.swift; sourceTree = "<group>"; };
 		6F98671C7C1410739E0BE6BD /* ArcadeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArcadeApp.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 				2C79F82C5A995697FA4C0102 /* SettingsView.swift */,
 				0D9FC4F7B3EEB237B393C814 /* SidebarView.swift */,
 				A75F616635ACB70D431A2E2E /* SignInView.swift */,
+				5A611B6B9FCCC1323E04A3A4 /* TimelineView.swift */,
 				996B0381B5A877F733919D06 /* WebcamOverlayView.swift */,
 			);
 			path = Views;
@@ -319,6 +322,7 @@
 				F8DFA5A0FBDC375C2E0978E2 /* StorageManager.swift in Sources */,
 				574BA27B17422D78F3A991DA /* Theme.swift in Sources */,
 				DA65A012EF6AB8C44C4440B4 /* Thumbnailer.swift in Sources */,
+				B3CB831971C1863FD128DA55 /* TimelineView.swift in Sources */,
 				766B69668FA6531FAB130422 /* UIComponents.swift in Sources */,
 				401BE76FC33FDA4991BECAF5 /* UserSession.swift in Sources */,
 				0452396502E6CA18B19C3FBD /* WebcamOverlayView.swift in Sources */,

@@ -149,6 +149,14 @@ final class ProjectEditorViewModel: ObservableObject {
         StorageManager.shared.writeProject(project)
     }
 
+    // MARK: - Playback control (called by timeline scrub)
+
+    func seek(to time: Double) {
+        let clamped = max(0, min(time, project.baseDuration))
+        player.seek(to: CMTime(seconds: clamped, preferredTimescale: 600),
+                    toleranceBefore: .zero, toleranceAfter: .zero)
+    }
+
     func save() {
         StorageManager.shared.writeProject(project)
     }
